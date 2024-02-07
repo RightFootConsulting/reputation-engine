@@ -30,12 +30,26 @@ type KarmaEventType struct {
 	UpdatedAt     time.Time `json:"updated_at"`
 }
 
+func (m *KarmaEventType) GetId() uuid.UUID {
+	return m.Id
+}
+func (m *KarmaEventType) SetId(id uuid.UUID) {
+	m.Id = id
+}
+
 type KarmaEvent struct {
 	Id           uuid.UUID `json:"id" gorm:"type:uuid;default:uuid_generate_v4();primaryKey"`
 	SocialEntity uuid.UUID `json:"social_entity"  gorm:"type:uuid"`
 	EventType    uuid.UUID `json:"karma_event_type" gorm:"karma_event_type"`
 	CreatedAt    time.Time `json:"created_at"`
 	UpdatedAt    time.Time `json:"updated_at"`
+}
+
+func (m *KarmaEvent) GetId() uuid.UUID {
+	return m.Id
+}
+func (m *KarmaEvent) SetId(id uuid.UUID) {
+	m.Id = id
 }
 
 type BlockReason string
@@ -59,6 +73,13 @@ type BlockEvent struct {
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
+func (m *BlockEvent) GetId() uuid.UUID {
+	return m.Id
+}
+func (m *BlockEvent) SetId(id uuid.UUID) {
+	m.Id = id
+}
+
 // References a user, org or business on a social media platform
 type SocialEntity struct {
 	Id         uuid.UUID `json:"id" gorm:"type:uuid;default:uuid_generate_v4();primaryKey"`
@@ -66,6 +87,13 @@ type SocialEntity struct {
 	Karma      int       `json:"karma"`       // Allows karma to be computed as events occur
 	CreatedAt  time.Time `json:"created_at"`
 	UpdatedAt  time.Time `json:"updated_at"`
+}
+
+func (m *SocialEntity) GetId() uuid.UUID {
+	return m.Id
+}
+func (m *SocialEntity) SetId(id uuid.UUID) {
+	m.Id = id
 }
 
 type BlockSummary struct {
@@ -76,4 +104,16 @@ type BlockSummary struct {
 	UnconfirmedCount int         `json:"unconfirmed_count"`
 	CreatedAt        time.Time   `json:"created_at"`
 	UpdatedAt        time.Time   `json:"updated_at"`
+}
+
+func (m *BlockSummary) GetId() uuid.UUID {
+	return m.Id
+}
+func (m *BlockSummary) SetId(id uuid.UUID) {
+	m.Id = id
+}
+
+type Model interface {
+	GetId() uuid.UUID
+	SetId(uuid.UUID)
 }
